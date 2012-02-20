@@ -271,6 +271,8 @@ var render_board = function (board) {
             var tile_canvas = document.getElementById(tile_id);
             cx.drawImage(tile_canvas, rx, ry, TILE_SIZE, TILE_SIZE);
         }
+
+    render_side_panel();
 }
 
 var process_click = function (event) {
@@ -286,7 +288,6 @@ var process_click = function (event) {
     rotate_tile(game_state.board, x, y);
     render_board();
     
-    document.getElementById("message").innerHTML = unmatch_adjacencies_count();
     if(game_finished()) 
         show_game_finish();
 };
@@ -321,14 +322,30 @@ var unmatch_adjacencies_count = function (board) {
     if(!board)
         board = game_state.board;
 
-    var unmatch_adjs = map_adjacencies(board, function (tile1, tile2, horizontal) {
+    var inner_unmatch_adjs = map_adjacencies(board, function (tile1, tile2, horizontal) {
         if(horizontal)
             return (tile1[EAST] != tile2[WEST]) ? 1 : 0;
         else
             return (tile1[SOUTH] != tile2[NORTH]) ? 1 : 0;
     });
 
-    return sum(unmatch_adjs);
+    var inner_count = sum(inner_unmatch_adjs);
+
+    var outer_count = 0;
+    var i;
+
+    for(i = 0; i < BOARD_SIZE; i++) {
+        if(board[i][0][NORTH])
+            outer_count ++;
+        if(board[i][BOARD_SIZE - 1][SOUTH])
+            outer_count ++;
+        if(board[0][i][WEST])
+            outer_count ++;
+        if(board[BOARD_SIZE - 1][i][EAST])
+            outer_count ++;
+    }
+
+    return inner_count + outer_count;
 }
 
 var get_empty_tile = function () {
@@ -411,6 +428,34 @@ var show_game_finish = function () {
     create_tile_images();
 }
 
+var render_side_panel = function () {
+    document.getElementById("unmatched").innerHTML = unmatch_adjacencies_count();
+}
+
+var reset_game = function () {
+    var size = parseInt(document.getElementById("resetter_number").value);
+
+    if(isNaN(size) || !(size >= 2 && size <= 20)) {
+        document.getElementById("resetter_message").innerHTML = "should be between 2 and 20";
+        return;
+    }
+
+    document.getElementById("resetter_message").innerHTML = "";
+
+    BOARD_SIZE = size;
+    TILE_SIZE = Math.floor(
+        Math.min(canvas_width, canvas_height) / BOARD_SIZE);
+
+    init_game_board_empty();
+    make_good_board();
+    shuffle_game_board();
+
+
+    create_tile_images();
+
+    render_board();
+}
+
 // ============== main ==============================
 
 init_game_board_empty();
@@ -424,3 +469,5 @@ create_tile_images();
 render_board();
 
 the_canvas.addEventListener("click", process_click, false);
+document.getElementById("resetter_button").addEventListener(
+    "click", reset_game, false);

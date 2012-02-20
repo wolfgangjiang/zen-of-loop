@@ -3,13 +3,28 @@
 <html>
   <head>
     <title>Zen of Loop</title>
+    <link href="zenloop.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
     <div id="the_scratch_pad" style="display: none;" ></div>
-    <canvas id="the_canvas" width="768" height="768" style="border:1px solid #c3c3c3; float:left">
+    <canvas id="the_canvas" width="768" height="768" >
       Your browser does not support the <em>canvas</em> element. Please upgrade your browser to newest version.
     </canvas>    
-    <div id="the_info_panel" width="300" height="768" style="border:1px solid #c3c3c3; float: left; width: 300px; height: 768px;"></div>
+    <div id="the_info_panel">
+      <div id="unmatched_panel">
+        <span id="unmatched_indicator"> UNMATCHED ENDS </span>
+        <span id="unmatched"></span>
+      </div>
+      <div id="resetter_panel">
+        <label for"resetter_number">SIZE:</label>
+        <input id="resetter_number" type="number" min="2" max="20" value="10" />
+        <p>
+          <input type="button" id="resetter_button" value="RESET"/>
+        </p>
+        <p id="resetter_message">
+        </p>
+      </div>
+    </div>
     <div id="message"></div>
     <script type="text/javascript" src="zenloop.js"></script>
   </body>

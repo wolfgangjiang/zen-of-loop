@@ -1,0 +1,37 @@
+#the_canvas {
+    border: 1px solid #c3c3c3;
+    float: left;
+}
+
+#the_info_panel {
+    border: 1px solid #c3c3c3;
+    float: left;
+    width: 300px;
+    height: 768px;
+    text-align: center;
+}
+
+#unmatched_panel {
+    margin: 85px 0px 360px 0px;
+}
+
+#unmatched_panel span {
+    display: block;
+}
+
+#unmatched {
+    font-size: 350%;
+}
+
+#resetter_number {
+    width: 100px;
+    font-size: 200%;
+}
+
+#resetter_button {
+    font-size: 200%;
+}
+
+#resetter_message {
+    color: red;
+}

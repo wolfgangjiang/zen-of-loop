@@ -1,1 +1,3 @@
 This is a remake of a simple flash game "Zen of Loop", in html5.
+
+We have made use of the "number" input element of html5, so it is better to be tried in a browser with support of such elements.
