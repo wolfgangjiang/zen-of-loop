@@ -458,16 +458,8 @@ var reset_game = function () {
 
 // ============== main ==============================
 
-init_game_board_empty();
-make_good_board();
-shuffle_game_board();
-
-// print_meanings_of_indices();
-
-create_tile_images();
-
-render_board();
-
 the_canvas.addEventListener("click", process_click, false);
 document.getElementById("resetter_button").addEventListener(
     "click", reset_game, false);
+
+reset_game();
